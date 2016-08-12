@@ -1,8 +1,10 @@
 PImage bg1Img, bg2Img, treasureImg, fighterImg, enemyImg, hpImg;
 int width = 640;
-int x_bg1 = 0, x_bg2 = -640;
-int x_treasure = floor(random(600)), y_treasure = floor(random(440)), x_hp = 200*1/5;
-float x_fighter = 590, y_fighter = 215, speed = 5;
+int x_bg1 = 0, x_bg2 = -width;
+int x_treasure = floor(random(600)), y_treasure = floor(random(440));
+int x_hp = 200*1/5;
+int speed_bg = 3, speed_fighter = 5, speed_enemy = 5;
+float x_fighter = 590, y_fighter = 215;
 final int COUNT = 5;
 float spacingX = 70, spacingY = 50;
 float x, y;
@@ -20,31 +22,25 @@ void setup () {
   fighterImg = loadImage("img/fighter.png");
   enemyImg = loadImage("img/enemy.png");
   hpImg = loadImage("img/hp.png");
-
 }
 
 void draw() {
 
       //bg
       image(bg1Img, x_bg1, 0);
-      x_bg1 += 3;
+      x_bg1 += speed_bg;
       if(x_bg1 >= width){
-        x_bg1 = -640;
+        x_bg1 = -width;
       }
       image(bg2Img, x_bg2, 0);
-      x_bg2 += 3;
+      x_bg2 += speed_bg;
       if(x_bg2 >= width){
-        x_bg2 = -640;
+        x_bg2 = -width;
       }
       
       //treasure
       image(treasureImg, x_treasure, y_treasure);
-      if(x_treasure >= (x_fighter+50) || x_treasure+40 <= x_fighter){
-        x_hp += 0;
-      }
-      else if((y_treasure+40) < y_fighter || y_treasure > (y_fighter+50)){
-        x_hp += 0;
-      }else{
+      if(x_treasure <= (x_fighter+50) && (x_treasure+40) >= x_fighter && (y_treasure+40) >= y_fighter && y_treasure <= (y_fighter+50)){
         x_treasure = floor(random(600));
         y_treasure = floor(random(440));
         if(x_hp == 200){
@@ -71,16 +67,16 @@ void draw() {
       
       //fighter action
       if(upPressed){
-        y_fighter -= speed;
+        y_fighter -= speed_fighter;
       }
       if(downPressed){
-        y_fighter += speed;
+        y_fighter += speed_fighter;
       }
       if(leftPressed){
-        x_fighter -= speed;
+        x_fighter -= speed_fighter;
       }
       if(rightPressed){
-        x_fighter += speed;
+        x_fighter += speed_fighter;
       }
       
       //enemy
@@ -92,7 +88,7 @@ void draw() {
         y = 0;
         image(enemyImg,x,y);
       }
-      x1_enemy += speed;
+      x1_enemy += speed_enemy;
       if(x1_enemy >= width){
         x1_enemy = -(2*width+3*COUNT*spacingX);
         y1_enemy = random(420);
@@ -107,7 +103,7 @@ void draw() {
         y = -i*spacingY;
         image(enemyImg,x,y);
       }
-      x2_enemy += speed;
+      x2_enemy += speed_enemy;
       if(x2_enemy >= width){
         x2_enemy = -(2*width+3*COUNT*spacingX);
         y2_enemy = random(200,420);
@@ -142,7 +138,7 @@ void draw() {
       }
         image(enemyImg,x,y);
       }
-      x3_enemy += speed;
+      x3_enemy += speed_enemy;
       if(x3_enemy >= width){
         x3_enemy = -(2*width+3*COUNT*spacingX);
         y3_enemy = random(100,320);
