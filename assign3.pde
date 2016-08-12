@@ -1,8 +1,8 @@
 PImage bg1Img, bg2Img, treasureImg, fighterImg, enemyImg, hpImg, start1Img, start2Img;
 int width = 640;
 int x_bg1, x_bg2, x_treasure, y_treasure, x_hp;
-int speed_bg = 3, speed_fighter = 5, speed_enemy = 5;
-float x_fighter, y_fighter, x1_enemy, y1_enemy, x2_enemy, y2_enemy, x3_enemy, y3_enemy;
+int speed_bg = 3, speed_fighter = 5, speed_enemy = 8;
+float x_fighter, y_fighter, x1_enemy, y1_enemy, x2_1_enemy, y2_1_enemy, x2_2_enemy, y2_2_enemy, x3_enemy, y3_enemy;
 float spacingX = 70, spacingY = 50, x, y;
 final int COUNT = 5;
 
@@ -37,8 +37,10 @@ void draw() {
       y_treasure = floor(random(440));
       x1_enemy = -COUNT*spacingX;
       y1_enemy = random(420); 
-      x2_enemy = -(width+2*COUNT*spacingX);
-      y2_enemy = random(200, 420);
+      x2_1_enemy = -(width+2*COUNT*spacingX);
+      y2_1_enemy = random(200, 420);
+      x2_2_enemy = -(4*width+5*COUNT*spacingX);
+      y2_2_enemy = random(220);
       x3_enemy = -(2*width+3*COUNT*spacingX);
       y3_enemy = random(100, 320);
       x_hp = 200*1/5;
@@ -125,16 +127,31 @@ void draw() {
         
         pushMatrix();
         //second
-        translate(x2_enemy, y2_enemy);
+        translate(x2_1_enemy, y2_1_enemy);
         for(int i=0; i<COUNT; i++){
           x = i*spacingX;
           y = -i*spacingY;
           image(enemyImg,x,y);
         }
-        x2_enemy += speed_enemy;
-        if(x2_enemy >= width){
-          x2_enemy = -(2*width+3*COUNT*spacingX);
-          y2_enemy = random(200,420);
+        x2_1_enemy += speed_enemy;
+        if(x2_1_enemy >= width){
+          x2_1_enemy = -(5*width+6*COUNT*spacingX);
+          y2_1_enemy = random(200,420);
+        };
+        popMatrix();
+        
+        pushMatrix();
+        //second
+        translate(x2_2_enemy, 220);
+        for(int i=0; i<COUNT; i++){
+          x = i*spacingX;
+          y = i*spacingY;
+          image(enemyImg,x,y);
+        }
+        x2_2_enemy += speed_enemy;
+        if(x2_2_enemy >= width){
+          x2_2_enemy = -(5*width+6*COUNT*spacingX);
+          y2_2_enemy = random(220);
         };
         popMatrix();
         
